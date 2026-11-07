@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hruthick N | Data Science & Mathematics Portfolio</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts: Inter & Fira Code -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Custom Tailwind Configuration for Extended Colors & Fonts -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            purple: '#8B5CF6',
+                            cyan: '#06B6D4',
+                            pink: '#EC4899',
+                            emerald: '#10B981',
+                            dark: '#090D16',
+                            card: 'rgba(15, 23, 42, 0.65)'
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'glow': 'glow 3s ease-in-out infinite alternate',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-12px)' },
+                        },
+                        glow: {
+                            '0%': { opacity: '0.4', filter: 'drop-shadow(0 0 15px rgba(139, 92, 246, 0.5))' },
+                            '100%': { opacity: '0.8', filter: 'drop-shadow(0 0 25px rgba(6, 182, 212, 0.8))' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Glassmorphism & Scrollbar Styles */
+        body {
+            background-color: #070a12;
+            color: #f3f4f6;
+            overflow-x: hidden;
+        }
+
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-panel-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-panel-hover:hover {
+            transform: translateY(-5px);
+            border-color: rgba(139, 92, 246, 0.4);
+            box-shadow: 0 12px 30px -10px rgba(139, 92, 246, 0.3);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #a78bfa 0%, #38bdf8 50%, #f472b6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .text-gradient-cyan {
+            background: linear-gradient(135deg, #22d3ee 0%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gradient-border {
+            position: relative;
+            border-radius: 1rem;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.5), rgba(6, 182, 212, 0.5), rgba(236, 72, 153, 0.5));
+            padding: 1px;
+        }
+        .gradient-border > div {
+            background: #0b0f19;
+            border-radius: calc(1rem - 1px);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #070a12;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8b5cf6;
+        }
+
+        /* Ambient Glow Blobs */
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.35;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased selection:bg-brand-purple selection:text-white">
+
+    <!-- Ambient Colorful Background Blobs -->
+    <div class="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+        <div class="blob w-[450px] h-[450px] bg-purple-600 top-[-50px] left-[-100px] animate-pulse-slow"></div>
+        <div class="blob w-[400px] h-[400px] bg-cyan-500 top-[30%] right-[-100px] animate-float"></div>
+        <div class="blob w-[500px] h-[500px] bg-pink-600 bottom-[-100px] left-[20%] animate-pulse-slow"></div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-white/10 px-4 lg:px-8 py-4 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <!-- Brand Logo -->
+            <a href="#hero" class="flex items-center gap-2 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-purple via-brand-cyan to-brand-pink p-[2px] transition-transform duration-300 group-hover:scale-105">
+                    <div class="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center font-bold font-mono text-lg text-white">
+                        H<span class="text-brand-cyan">N</span>
+                    </div>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-extrabold tracking-tight text-white group-hover:text-brand-cyan transition-colors">HRUTHICK N</span>
+                    <span class="text-[10px] font-mono text-purple-400 tracking-wider">DATA SCIENCE & MATH</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <div class="hidden md:flex items-center space-x-8 font-medium text-sm text-gray-300">
+                <a href="#about" class="hover:text-brand-cyan transition-colors">About</a>
+                <a href="#skills" class="hover:text-brand-cyan transition-colors">Skills</a>
+                <a href="#playground" class="hover:text-brand-cyan transition-colors flex items-center gap-1">
+                    <i class="fa-solid me-1 fa-square-root-variable text-brand-pink text-xs"></i> Math Lab
+                </a>
+                <a href="#projects" class="hover:text-brand-cyan transition-colors">Projects</a>
+                <a href="#education" class="hover:text-brand-cyan transition-colors">Education</a>
+                <a href="#contact" class="hover:text-brand-cyan transition-colors">Contact</a>
+            </div>
+
+            <!-- CTA Button -->
+            <div class="hidden md:flex items-center gap-3">
+                <a href="#contact" class="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-xs font-semibold rounded-lg group bg-gradient-to-br from-purple-500 via-cyan-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-white text-white shadow-lg shadow-purple-500/25 transition-all duration-300 hover:scale-105">
+                    <span class="relative px-4 py-2 transition-all ease-in duration-75 bg-gray-900 rounded-[6px] group-hover:bg-opacity-0 flex items-center gap-2">
+                        <i class="fa-solid fa-paper-plane text-xs"></i> Let's Connect
+                    </span>
+                </a>
+            </div>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-gray-300 hover:text-white text-xl focus:outline-none" aria-label="Toggle Menu">
+                <i class="fa-solid fa-bars" id="menu-icon"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Nav Menu drop down -->
+        <div id="mobile-menu" class="hidden md:hidden mt-4 pt-4 border-t border-white/10 flex flex-col space-y-3 pb-2 px-2">
+            <a href="#about" class="mobile-link text-gray-300 hover:text-brand-cyan py-1">About Me</a>
+            <a href="#skills" class="mobile-link text-gray-300 hover:text-brand-cyan py-1">Skills</a>
+            <a href="#playground" class="mobile-link text-gray-300 hover:text-brand-cyan py-1">Interactive Math Lab</a>
+            <a href="#projects" class="mobile-link text-gray-300 hover:text-brand-cyan py-1">Projects</a>
+            <a href="#education" class="mobile-link text-gray-300 hover:text-brand-cyan py-1">Education</a>
+            <a href="#contact" class="mobile-link text-gray-300 hover:text-brand-cyan py-1">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="relative z-10 pt-24">
+
+        <!-- ================= HERO SECTION ================= -->
+        <section id="hero" class="min-h-[90vh] flex items-center justify-center px-4 lg:px-8 relative overflow-hidden py-12">
+            <!-- Canvas interactive background node particles -->
+            <canvas id="hero-canvas" class="absolute inset-0 z-0 opacity-40 pointer-events-auto"></canvas>
+
+            <div class="max-w-6xl mx-auto w-full z-10 text-center">
+                
+                <!-- Status Pill -->
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel border border-brand-purple/40 text-xs font-mono mb-8 animate-bounce">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span class="text-gray-300">BSc Data Science & Mathematics Student</span>
+                    <span class="text-brand-cyan font-bold">• Open to Research & Internships</span>
+                </div>
+
+                <!-- Hero Headline -->
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-tight">
+                    Where <span class="text-gradient">Mathematical Rigor</span><br>
+                    Meets <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">Data Intelligence</span>
+                </h1>
+
+                <!-- Subtitle / Bio Dynamic Typing simulation -->
+                <p class="max-w-3xl mx-auto text-lg md:text-xl text-gray-300 mb-10 font-light leading-relaxed">
+                    Hi, I'm <strong class="text-white font-semibold">Hruthick N</strong>. I bridge the gap between 
+                    <span class="text-brand-cyan font-mono">Abstract Theorem Proving</span> and 
+                    <span class="text-brand-pink font-mono">Predictive Machine Learning</span>. Transforming complex data manifolds into actionable real-world insights.
+                </p>
+
+                <!-- Hero CTAs -->
+                <div class="flex flex-wrap justify-center items-center gap-4 mb-16">
+                    <a href="#projects" class="px-8 py-4 rounded-xl bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 text-white font-semibold text-sm hover:opacity-90 transition-all duration-300 shadow-lg shadow-purple-600/30 hover:scale-105 flex items-center gap-2">
+                        <i class="fa-solid fa-code"></i> Explore Projects
+                    </a>
+                    <a href="#playground" class="px-8 py-4 rounded-xl glass-panel text-white font-semibold text-sm hover:border-brand-cyan/50 hover:bg-slate-800/80 transition-all duration-300 flex items-center gap-2">
+                        <i class="fa-solid fa-square-root-variable text-brand-cyan"></i> Try Interactive Math Lab
+                    </a>
+                    <a href="#contact" class="px-6 py-4 rounded-xl border border-white/10 hover:border-white/30 text-gray-300 hover:text-white font-medium text-sm transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-envelope"></i> Contact Me
+                    </a>
+                </div>
+
+                <!-- Quick Stats Counter Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+                    <div class="glass-panel p-6 rounded-2xl text-center border-t-2 border-t-brand-purple">
+                        <div class="text-3xl lg:text-4xl font-extrabold font-mono text-white mb-1 counter" data-target="9.4">0</div>
+                        <div class="text-xs text-gray-400 uppercase tracking-wider font-semibold">Academic GPA / 10</div>
+                    </div>
+                    <div class="glass-panel p-6 rounded-2xl text-center border-t-2 border-t-brand-cyan">
+                        <div class="text-3xl lg:text-4xl font-extrabold font-mono text-white mb-1 counter" data-target="15">0</div>
+                        <div class="text-xs text-gray-400 uppercase tracking-wider font-semibold">ML & Data Models</div>
+                    </div>
+                    <div class="glass-panel p-6 rounded-2xl text-center border-t-2 border-t-brand-pink">
+                        <div class="text-3xl lg:text-4xl font-extrabold font-mono text-white mb-1 counter" data-target="500">0</div>
+                        <div class="text-xs text-gray-400 uppercase tracking-wider font-semibold">Math Theorems & Proofs</div>
+                    </div>
+                    <div class="glass-panel p-6 rounded-2xl text-center border-t-2 border-t-brand-emerald">
+                        <div class="text-3xl lg:text-4xl font-extrabold font-mono text-white mb-1 counter" data-target="100">0</div>
+                        <div class="text-xs text-gray-400 uppercase tracking-wider font-semibold">% Passion For Code</div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- ================= ABOUT ME SECTION ================= -->
+        <section id="about" class="py-20 px-4 lg:px-8 max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-xs font-mono uppercase tracking-widest text-brand-cyan mb-2">01. Discovery</h2>
+                <h3 class="text-3xl lg:text-4xl font-bold text-white">The Synergy of Data & Mathematics</h3>
+                <div class="w-16 h-1 bg-gradient-to-r from-brand-purple to-brand-cyan mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                <!-- Left Visual Graphic (Mathematical Manifold / Tech Graphic) -->
+                <div class="lg:col-span-5">
+                    <div class="gradient-border p-[1px]">
+                        <div class="p-8 rounded-[15px] space-y-6 relative overflow-hidden">
+                            <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-brand-cyan/20 rounded-full blur-2xl"></div>
+                            
+                            <div class="flex items-center gap-4">
+                                <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-cyan-500 flex items-center justify-center text-white text-2xl shadow-lg">
+                                    <i class="fa-solid fa-user-astronaut"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-bold text-white">Hruthick N</h4>
+                                    <p class="text-xs font-mono text-brand-purple">Data Scientist & Mathematician</p>
+                                </div>
+                            </div>
+
+                            <hr class="border-white/10">
+
+                            <!-- Highlighted Core Pillars -->
+                            <div class="space-y-4 text-sm">
+                                <div class="flex items-start gap-3">
+                                    <div class="p-2 rounded-lg bg-purple-500/10 text-purple-400 mt-1">
+                                        <i class="fa-solid fa-chart-line"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-semibold text-white">Statistical Analytics</h5>
+                                        <p class="text-gray-400 text-xs">Uncovering non-linear relationships and high-dimensional variance in complex datasets.</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-start gap-3">
+                                    <div class="p-2 rounded-lg bg-cyan-500/10 text-cyan-400 mt-1">
+                                        <i class="fa-solid fa-calculator"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-semibold text-white">Applied Linear Algebra</h5>
+                                        <p class="text-gray-400 text-xs">Leveraging Eigen-decomposition, SVD, and vector space transformations for Machine Learning.</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-start gap-3">
+                                    <div class="p-2 rounded-lg bg-pink-500/10 text-pink-400 mt-1">
+                                        <i class="fa-solid fa-brain"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-semibold text-white">Algorithmic Optimization</h5>
+                                        <p class="text-gray-400 text-xs">Gradient Descent variants, Convex Optimization, and Loss Function minimization.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pt-2 flex justify-between items-center text-xs font-mono text-gray-400 bg-slate-900/80 p-3 rounded-lg border border-white/5">
+                                <span><i class="fa-solid fa-location-dot text-brand-pink me-1"></i> Based in India</span>
+                                <span class="text-emerald-400"><i class="fa-solid fa-circle text-[8px] me-1"></i> Active Researcher</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Text Bio -->
+                <div class="lg:col-span-7 space-y-6 text-gray-300 leading-relaxed text-base">
+                    <p class="text-lg">
+                        As a <strong class="text-white">BSc Data Science & Mathematics</strong> student, I view modern Artificial Intelligence not as a black box, but as an elegant continuation of multivariable calculus, linear algebra, and probability theory.
+                    </p>
+                    <p>
+                        My academic journey equips me with both the <span class="text-brand-purple font-semibold">abstract mathematical foundational intuition</span> and the <span class="text-brand-cyan font-semibold">hands-on programming expertise</span> required to engineer robust data solutions. Whether it's training Neural Networks, modeling stochastic processes, or building algorithmic visualizers, I thrive at the intersection of logic and computation.
+                    </p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 py-4">
+                        <div class="p-4 rounded-xl glass-panel border border-white/5">
+                            <span class="text-brand-cyan font-mono text-xs block mb-1">01. MATH FOCUS</span>
+                            <h5 class="text-white font-bold text-sm mb-1">Pure & Applied Rigor</h5>
+                            <p class="text-xs text-gray-400">Differential Equations, Real Analysis, Linear Algebra, Probability Theory.</p>
+                        </div>
+                        <div class="p-4 rounded-xl glass-panel border border-white/5">
+                            <span class="text-brand-pink font-mono text-xs block mb-1">02. DATA FOCUS</span>
+                            <h5 class="text-white font-bold text-sm mb-1">Modern Data Science</h5>
+                            <p class="text-xs text-gray-400">Deep Learning, Predictive Modeling, Exploratory Data Analysis, NLP.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap gap-3 pt-2">
+                        <span class="px-3 py-1.5 rounded-full text-xs font-mono bg-purple-900/30 border border-purple-500/30 text-purple-300">Python</span>
+                        <span class="px-3 py-1.5 rounded-full text-xs font-mono bg-cyan-900/30 border border-cyan-500/30 text-cyan-300">R Programming</span>
+                        <span class="px-3 py-1.5 rounded-full text-xs font-mono bg-pink-900/30 border border-pink-500/30 text-pink-300">PyTorch</span>
+                        <span class="px-3 py-1.5 rounded-full text-xs font-mono bg-emerald-900/30 border border-emerald-500/30 text-emerald-300">SQL & Relational DBs</span>
+                        <span class="px-3 py-1.5 rounded-full text-xs font-mono bg-amber-900/30 border border-amber-500/30 text-amber-300">LaTeX</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= TECHNICAL SKILLS SECTION ================= -->
+        <section id="skills" class="py-20 px-4 lg:px-8 max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-xs font-mono uppercase tracking-widest text-brand-pink mb-2">02. Expertise</h2>
+                <h3 class="text-3xl lg:text-4xl font-bold text-white">Categorized Technical Skillset</h3>
+                <p class="text-gray-400 text-sm max-w-xl mx-auto mt-2">Comprehensive stack covering data manipulation, predictive artificial intelligence, and rigorous mathematics.</p>
+                <div class="w-16 h-1 bg-gradient-to-r from-brand-cyan to-brand-pink mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- 4 Skill Category Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Category 1: Data Science & Analytics -->
+                <div class="glass-panel p-6 rounded-2xl glass-panel-hover border-t-4 border-t-brand-purple flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-xl mb-6">
+                            <i class="fa-solid fa-chart-pie"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-white mb-2">Data Science & Analytics</h4>
+                        <p class="text-xs text-gray-400 mb-6">Extracting patterns, exploratory analysis, and visual data storytelling.</p>
+                        
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center text-xs">
+                                <span class="text-gray-300 font-medium">Pandas & NumPy</span>
+                                <span class="text-brand-purple font-mono">95%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                                <div class="bg-gradient-to-r from-purple-600 to-indigo-400 h-full rounded-full" style="width: 95%"></div>
+                            </div>
+
+                            <div class="flex justify-between items-center text-xs">
+                                <span class="text-gray-300 font-medium">EDA & Data Visualization</span>
+                                <span class="text-brand-purple font-mono">90%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                                <div class="bg-gradient-to-r from-purple-600 to-indigo-400 h-full rounded-full" style="width: 90%"></div>
+                            </div>
+
+                            <div class="flex justify-between items-center text-xs">
+                                <span class="text-gray-300 font-medium">SQL & PostgreSQL</span>
+                                <span class="text-brand-purple font-mono">85%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                                <div class="bg-gradient-to-r from-purple-600 to-indigo-400 h-full rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-white/5 flex flex-wrap gap-1.5">
+                        <span class="px-2 py-1 text-[10px] font-mono bg-purple-500/10 text-purple-300 rounded">Seaborn</span>
+                        <span class="px-2 py-1 text-[10px] font-mono bg-purple-500/10 text-purple-300 rounded">Matplotlib</span>
+                        <span class="px-2 py-1 text-[10px] font-mono bg-purple-500/10 text-purple-300 rounded">Tableau</span>
+                    </div>
+                </div>
+
+                <!-- Category 2: Machine Learning & AI -->
+                <div class="glass-panel p-6 rounded-2xl glass-panel-hover border-t-4 border-t-brand-cyan flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-xl mb-6">
+                            <i class="fa-solid fa-brain"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-white mb-2">Machine Learning & AI</h4>
+                        <p class="text-xs text-gray-400 mb-6">Building predictive algorithms, deep neural nets, and statistical learning models.</p>
+                        
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center text-xs">
+                                <span class="text-gray-300 font-medium">Scikit-Learn</span>
+                                <span class="text-brand-cyan font-mono">90%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                                <div class="bg-gradient-to-r from-cyan-500 to-blue-400 h-full rounded-full" style="width: 90%"></div>
+                            </div>
+
+                            <div class="flex justify-between items-center text-xs">
+                                <span class="text-gray-300 font-medium">PyTorch & Deep Learning</span>
+                                <span class="text-brand-cyan font-mono">82%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                                <div class="bg-gradient-to-r from-cyan-500 to-blue-400 h-full rounded-full" style="width: 82%"></div>
+                            </div>
+
+                            <div class="flex justify-between items-center text-xs">
+                                <span class="text-gray-300 font-medium">Supervised/Unsupervised</span>
+                                <span class="text-brand-cyan font-mono">92%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                                <div class="bg-gradient-to-r from-cyan-500 to-blue-400 h-full rounded-full" style="width: 92%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-white/5 flex flex-wrap gap-1.5">
+                        <span class="px-2 py-1 text-[10px] font-mono bg-cyan-500/10 text-cyan-300 rounded">XGBoost</span>
+                        <span class="px-2 py-1 text-[10px] font-mono bg-cyan-500/10 text-cyan-300 rounded">NLP</span>
+                        <span class="px-2 py-1 text-[10px] font-mono bg-cyan-500/10 text-cyan-300 rounded">TensorFlow</span>
+                    </div>
+                </div>
+
+                <!-- Category 3: Pure & Applied Math -->
+                <div class="glass-panel p-6 rounded-2xl glass-panel-hover border-t-4 border-t-brand-pink flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-pink-500/20 text-pink-400 flex items-center justify-center text-xl mb-6">
+                            <i class="fa-solid fa-infinity"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-white mb-2">Pure & Applied Math</h4>
+                        <p class="text-xs text-gray-400 mb-6">Theoretical formulation, optimization, continuous calculus, and probability.</p>
+                        
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center text-xs">
+                                <span class="text-gray-300 font-medium">Linear Algebra & Matrices</span>
+                                <span class="text-brand-pink font-mono">96%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                                <div class="bg-gradient-to-r from-pink-500 to-rose-400 h-full rounded-full" style="width: 96%"></div>
+                            </div>
+
+                            <div class="flex justify-between items-center text-xs">
+                                <span class="text-gray-300 font-medium">Probability & Stochastic</span>
+                                <span class="text-brand-pink font-mono">88%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                                <div class="bg-gradient-to-r from-pink-500 to-rose-400 h-full rounded-full" style="width: 88%"></div>
+                            </div>
+
+                            <div class="flex justify-between items-center text-xs">
+                                <span class="text-gray-300 font-medium">Multivariable Calculus</span>
+                                <span class="text-brand-pink font-mono">90%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                                <div class="bg-gradient-to-r from-pink-500 to-rose-400 h-full rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-white/5 flex flex-wrap gap-1.5">
+                        <span class="px-2 py-1 text-[10px] font-mono bg-pink-500/10 text-pink-300 rounded">Optimization</span>
+                        <span class="px-2 py-1 text-[10px] font-mono bg-pink-500/10 text-pink-300 rounded">Diff Equations</span>
+                        <span class="px-2 py-1 text-[10px] font-mono bg-pink-500/10 text-pink-300 rounded">Real Analysis</span>
+                    </div>
+                </div>
+
+                <!-- Category 4: Programming & Tools -->
+                <div class="glass-panel p-6 rounded-2xl glass-panel-hover border-t-4 border-t-brand-emerald flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl mb-6">
+                            <i class="fa-solid fa-code"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-white mb-2">Programming & Tools</h4>
+                        <p class="text-xs text-gray-400 mb-6">Modern developer environment, version control, and computing languages.</p>
+                        
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center text-xs">
+                                <span class="text-gray-300 font-medium">Python (SciPy, SymPy)</span>
+                                <span class="text-brand-emerald font-mono">95%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                                <div class="bg-gradient-to-r from-emerald-500 to-teal-400 h-full rounded-full" style="width: 95%"></div>
+                            </div>
+
+                            <div class="flex justify-between items-center text-xs">
+                                <span class="text-gray-300 font-medium">R Studio & Tidyverse</span>
+                                <span class="text-brand-emerald font-mono">85%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                                <div class="bg-gradient-to-r from-emerald-500 to-teal-400 h-full rounded-full" style="width: 85%"></div>
+                            </div>
+
+                            <div class="flex justify-between items-center text-xs">
+                                <span class="text-gray-300 font-medium">Git, GitHub & Docker</span>
+                                <span class="text-brand-emerald font-mono">88%</span>
+                            </div>
+                            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                                <div class="bg-gradient-to-r from-emerald-500 to-teal-400 h-full rounded-full" style="width: 88%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-white/5 flex flex-wrap gap-1.5">
+                        <span class="px-2 py-1 text-[10px] font-mono bg-emerald-500/10 text-emerald-300 rounded">LaTeX</span>
+                        <span class="px-2 py-1 text-[10px] font-mono bg-emerald-500/10 text-emerald-300 rounded">Jupyter</span>
+                        <span class="px-2 py-1 text-[10px] font-mono bg-emerald-500/10 text-emerald-300 rounded">C++ Basis</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- ================= INTERACTIVE MATH & DATA PLAYGROUND ================= -->
+        <section id="playground" class="py-20 px-4 lg:px-8 max-w-7xl mx-auto">
+            <div class="glass-panel p-8 lg:p-12 rounded-3xl border border-brand-purple/30 relative overflow-hidden">
+                <div class="absolute -top-24 -left-24 w-60 h-60 bg-brand-purple/20 rounded-full blur-3xl"></div>
+                <div class="absolute -bottom-24 -right-24 w-60 h-60 bg-brand-cyan/20 rounded-full blur-3xl"></div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+                    
+                    <!-- Left Description -->
+                    <div class="lg:col-span-5 space-y-4">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-mono">
+                            <i class="fa-solid fa-flask"></i> Interactive Demonstration
+                        </div>
+                        <h3 class="text-2xl lg:text-3xl font-extrabold text-white">2D Matrix Linear Transformation Visualizer</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed">
+                            Linear Algebra is the engine behind Machine Learning. Adjust the rotation angle ($\theta$) and shearing factors below to see how a transformation matrix $\mathbf{A}$ deforms the 2D vector space grid.
+                        </p>
+                        
+                        <!-- Controls -->
+                        <div class="space-y-4 pt-2">
+                            <div>
+                                <div class="flex justify-between text-xs font-mono text-gray-300 mb-1">
+                                    <span>Rotation Angle ($\theta$):</span>
+                                    <span id="angle-val" class="text-brand-cyan font-bold">45°</span>
+                                </div>
+                                <input type="range" id="angle-slider" min="0" max="360" value="45" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-brand-cyan">
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between text-xs font-mono text-gray-300 mb-1">
+                                    <span>Shear X Factor:</span>
+                                    <span id="shear-val" class="text-brand-pink font-bold">0.5</span>
+                                </div>
+                                <input type="range" id="shear-slider" min="-2" max="2" step="0.1" value="0.5" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-brand-pink">
+                            </div>
+
+                            <div class="p-3 bg-slate-950/80 rounded-xl font-mono text-xs text-gray-300 border border-white/5 space-y-1">
+                                <div class="text-gray-400">Current Matrix A:</div>
+                                <div class="text-brand-cyan" id="matrix-display">
+                                    [ cos(45°)+0.5*sin(45°)  -sin(45°) ]<br>
+                                    [ sin(45°)               cos(45°)  ]
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Canvas Plotter -->
+                    <div class="lg:col-span-7 flex justify-center">
+                        <div class="w-full max-w-md bg-slate-950/90 rounded-2xl p-4 border border-white/10 shadow-2xl relative">
+                            <div class="flex justify-between items-center mb-2 px-2 text-xs font-mono text-gray-400">
+                                <span><i class="fa-solid fa-circle text-emerald-400 text-[8px] me-1"></i> Eigenvector Basis Demo</span>
+                                <span class="text-purple-400">Canvas 2D Engine</span>
+                            </div>
+                            <canvas id="matrix-canvas" width="400" height="350" class="w-full h-auto bg-slate-900 rounded-xl border border-white/5"></canvas>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= FEATURED PROJECTS SECTION ================= -->
+        <section id="projects" class="py-20 px-4 lg:px-8 max-w-7xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-xs font-mono uppercase tracking-widest text-brand-cyan mb-2">03. Portfolio</h2>
+                <h3 class="text-3xl lg:text-4xl font-bold text-white">Featured Projects & Research</h3>
+                <p class="text-gray-400 text-sm max-w-xl mx-auto mt-2">Filter through my recent algorithmic, statistical modeling, and deep learning implementations.</p>
+                <div class="w-16 h-1 bg-gradient-to-r from-brand-purple via-brand-cyan to-brand-pink mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- Project Filter Buttons -->
+            <div class="flex flex-wrap justify-center gap-2 mb-12" id="project-filters">
+                <button class="filter-btn active px-4 py-2 rounded-xl text-xs font-mono transition-all duration-300 bg-brand-purple text-white shadow-lg shadow-purple-500/25" data-filter="all">All Projects</button>
+                <button class="filter-btn px-4 py-2 rounded-xl text-xs font-mono transition-all duration-300 glass-panel text-gray-300 hover:text-white hover:border-brand-cyan" data-filter="ds">Data Science</button>
+                <button class="filter-btn px-4 py-2 rounded-xl text-xs font-mono transition-all duration-300 glass-panel text-gray-300 hover:text-white hover:border-brand-cyan" data-filter="ml">Machine Learning</button>
+                <button class="filter-btn px-4 py-2 rounded-xl text-xs font-mono transition-all duration-300 glass-panel text-gray-300 hover:text-white hover:border-brand-cyan" data-filter="math">Applied Math</button>
+            </div>
+
+            <!-- Projects Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
+
+                <!-- Project Card 1 -->
+                <div class="project-card glass-panel rounded-2xl overflow-hidden glass-panel-hover border border-white/10 flex flex-col justify-between" data-category="ds ml">
+                    <div>
+                        <div class="h-48 bg-slate-900 relative overflow-hidden group">
+                            <!-- SVG Abstract Vector Graphic -->
+                            <div class="absolute inset-0 bg-gradient-to-br from-purple-900/60 to-slate-950 flex items-center justify-center p-6">
+                                <svg class="w-full h-full text-purple-400 opacity-80" viewBox="0 0 100 100">
+                                    <path fill="none" stroke="currentColor" stroke-width="2" d="M10,80 Q30,20 50,70 T90,10" />
+                                    <circle cx="30" cy="45" r="4" fill="#06B6D4" />
+                                    <circle cx="50" cy="70" r="4" fill="#EC4899" />
+                                    <circle cx="90" cy="10" r="4" fill="#10B981" />
+                                </svg>
+                            </div>
+                            <span class="absolute top-3 right-3 px-2.5 py-1 rounded-md bg-purple-900/80 text-purple-300 text-[10px] font-mono border border-purple-500/30">Time-Series ML</span>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="text-xl font-bold text-white mb-2">Financial Time-Series & Portfolio Optimization</h4>
+                            <p class="text-xs text-gray-300 leading-relaxed mb-4">
+                                Combined ARIMA models with Monte Carlo simulations to optimize asset allocations using Modern Portfolio Theory (Markowitz Mean-Variance).
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-0">
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-cyan-300">Python</span>
+                            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-purple-300">NumPy</span>
+                            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-pink-300">SciPy Optimization</span>
+                        </div>
+                        <div class="flex justify-between items-center border-t border-white/5 pt-4">
+                            <a href="#" class="text-xs font-mono text-brand-cyan hover:underline flex items-center gap-1">
+                                <i class="fa-brands fa-github"></i> View Repository
+                            </a>
+                            <span class="text-xs text-gray-400 font-mono">98.2% Accuracy</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 2 -->
+                <div class="project-card glass-panel rounded-2xl overflow-hidden glass-panel-hover border border-white/10 flex flex-col justify-between" data-category="ml">
+                    <div>
+                        <div class="h-48 bg-slate-900 relative overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-br from-cyan-900/60 to-slate-950 flex items-center justify-center p-6">
+                                <svg class="w-full h-full text-cyan-400 opacity-80" viewBox="0 0 100 100">
+                                    <circle cx="50" cy="50" r="35" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4" />
+                                    <circle cx="50" cy="50" r="20" fill="none" stroke="#EC4899" stroke-width="2" />
+                                    <line x1="15" y1="50" x2="85" y2="50" stroke="currentColor" opacity="0.5" />
+                                    <line x1="50" y1="15" x2="50" y2="85" stroke="currentColor" opacity="0.5" />
+                                </svg>
+                            </div>
+                            <span class="absolute top-3 right-3 px-2.5 py-1 rounded-md bg-cyan-900/80 text-cyan-300 text-[10px] font-mono border border-cyan-500/30">Deep Learning</span>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="text-xl font-bold text-white mb-2">Neural Topology & Manifold Visualizer</h4>
+                            <p class="text-xs text-gray-300 leading-relaxed mb-4">
+                                PyTorch-based visualizer exploring how hidden layers transform non-linearly separable decision boundaries into higher-dimensional manifolds.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-0">
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-cyan-300">PyTorch</span>
+                            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-pink-300">Manifold Learning</span>
+                            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-emerald-300">Matplotlib</span>
+                        </div>
+                        <div class="flex justify-between items-center border-t border-white/5 pt-4">
+                            <a href="#" class="text-xs font-mono text-brand-cyan hover:underline flex items-center gap-1">
+                                <i class="fa-brands fa-github"></i> View Repository
+                            </a>
+                            <span class="text-xs text-gray-400 font-mono">t-SNE / PCA</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 3 -->
+                <div class="project-card glass-panel rounded-2xl overflow-hidden glass-panel-hover border border-white/10 flex flex-col justify-between" data-category="math">
+                    <div>
+                        <div class="h-48 bg-slate-900 relative overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-br from-pink-900/60 to-slate-950 flex items-center justify-center p-6">
+                                <svg class="w-full h-full text-pink-400 opacity-80" viewBox="0 0 100 100">
+                                    <rect x="20" y="20" width="60" height="60" fill="none" stroke="currentColor" stroke-width="1.5" />
+                                    <line x1="20" y1="20" x2="80" y2="80" stroke="#06B6D4" stroke-width="2" />
+                                    <line x1="80" y1="20" x2="20" y2="80" stroke="#8B5CF6" stroke-width="2" />
+                                </svg>
+                            </div>
+                            <span class="absolute top-3 right-3 px-2.5 py-1 rounded-md bg-pink-900/80 text-pink-300 text-[10px] font-mono border border-pink-500/30">Differential Equations</span>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="text-xl font-bold text-white mb-2">Epidemic SIR Model via System of ODEs</h4>
+                            <p class="text-xs text-gray-300 leading-relaxed mb-4">
+                                Solved nonlinear coupled differential equations (Susceptible-Infectious-Recovered) using Runge-Kutta 4th Order numerical integration methods.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-0">
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-pink-300">R Language</span>
+                            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-purple-300">SciPy ODEint</span>
+                            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-cyan-300">Numerical Methods</span>
+                        </div>
+                        <div class="flex justify-between items-center border-t border-white/5 pt-4">
+                            <a href="#" class="text-xs font-mono text-brand-cyan hover:underline flex items-center gap-1">
+                                <i class="fa-brands fa-github"></i> View Repository
+                            </a>
+                            <span class="text-xs text-gray-400 font-mono">RK4 Solver</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 4 -->
+                <div class="project-card glass-panel rounded-2xl overflow-hidden glass-panel-hover border border-white/10 flex flex-col justify-between" data-category="ds">
+                    <div>
+                        <div class="h-48 bg-slate-900 relative overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-br from-emerald-900/60 to-slate-950 flex items-center justify-center p-6">
+                                <svg class="w-full h-full text-emerald-400 opacity-80" viewBox="0 0 100 100">
+                                    <bar x="15" y="40" width="15" height="40" fill="currentColor" />
+                                    <bar x="42" y="20" width="15" height="60" fill="#06B6D4" />
+                                    <bar x="70" y="55" width="15" height="25" fill="#EC4899" />
+                                </svg>
+                            </div>
+                            <span class="absolute top-3 right-3 px-2.5 py-1 rounded-md bg-emerald-900/80 text-emerald-300 text-[10px] font-mono border border-emerald-500/30">Data Analytics</span>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="text-xl font-bold text-white mb-2">Exploratory Customer Churn & SQL Analytics</h4>
+                            <p class="text-xs text-gray-300 leading-relaxed mb-4">
+                                Engineered complex PostgreSQL queries with window functions and cohort analysis to identify key churn indicators across 500k+ customer transactions.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-0">
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-emerald-300">PostgreSQL</span>
+                            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-cyan-300">Pandas</span>
+                            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-purple-300">Tableau</span>
+                        </div>
+                        <div class="flex justify-between items-center border-t border-white/5 pt-4">
+                            <a href="#" class="text-xs font-mono text-brand-cyan hover:underline flex items-center gap-1">
+                                <i class="fa-brands fa-github"></i> View Repository
+                            </a>
+                            <span class="text-xs text-gray-400 font-mono">SQL Insights</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 5 -->
+                <div class="project-card glass-panel rounded-2xl overflow-hidden glass-panel-hover border border-white/10 flex flex-col justify-between" data-category="ml ds">
+                    <div>
+                        <div class="h-48 bg-slate-900 relative overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-br from-indigo-900/60 to-slate-950 flex items-center justify-center p-6">
+                                <svg class="w-full h-full text-indigo-400 opacity-80" viewBox="0 0 100 100">
+                                    <path d="M10,50 C30,90 70,10 90,50" fill="none" stroke="currentColor" stroke-width="3" />
+                                    <circle cx="50" cy="50" r="5" fill="#06B6D4" />
+                                </svg>
+                            </div>
+                            <span class="absolute top-3 right-3 px-2.5 py-1 rounded-md bg-indigo-900/80 text-indigo-300 text-[10px] font-mono border border-indigo-500/30">NLP</span>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="text-xl font-bold text-white mb-2">Automated Sentiment & Text Mining Pipeline</h4>
+                            <p class="text-xs text-gray-300 leading-relaxed mb-4">
+                                Implemented TF-IDF vectorization combined with Naive Bayes & BERT fine-tuning to perform multi-class sentiment analysis on real-time news data.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-0">
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-indigo-300">Scikit-Learn</span>
+                            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-purple-300">PyTorch</span>
+                            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-cyan-300">NLTK</span>
+                        </div>
+                        <div class="flex justify-between items-center border-t border-white/5 pt-4">
+                            <a href="#" class="text-xs font-mono text-brand-cyan hover:underline flex items-center gap-1">
+                                <i class="fa-brands fa-github"></i> View Repository
+                            </a>
+                            <span class="text-xs text-gray-400 font-mono">F1-Score: 0.93</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 6 -->
+                <div class="project-card glass-panel rounded-2xl overflow-hidden glass-panel-hover border border-white/10 flex flex-col justify-between" data-category="math ml">
+                    <div>
+                        <div class="h-48 bg-slate-900 relative overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-br from-amber-900/60 to-slate-950 flex items-center justify-center p-6">
+                                <svg class="w-full h-full text-amber-400 opacity-80" viewBox="0 0 100 100">
+                                    <polygon points="50,15 90,85 10,85" fill="none" stroke="currentColor" stroke-width="2" />
+                                    <circle cx="50" cy="50" r="10" fill="#EC4899" />
+                                </svg>
+                            </div>
+                            <span class="absolute top-3 right-3 px-2.5 py-1 rounded-md bg-amber-900/80 text-amber-300 text-[10px] font-mono border border-amber-500/30">Graph Theory</span>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="text-xl font-bold text-white mb-2">Graph Theory Social Network Clusterer</h4>
+                            <p class="text-xs text-gray-300 leading-relaxed mb-4">
+                                Applied Spectral Clustering using Laplacian matrix eigenvalues to detect community structures and modularity in large-scale social graphs.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-0">
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-amber-300">NetworkX</span>
+                            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-pink-300">Spectral Theory</span>
+                            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-cyan-300">Python</span>
+                        </div>
+                        <div class="flex justify-between items-center border-t border-white/5 pt-4">
+                            <a href="#" class="text-xs font-mono text-brand-cyan hover:underline flex items-center gap-1">
+                                <i class="fa-brands fa-github"></i> View Repository
+                            </a>
+                            <span class="text-xs text-gray-400 font-mono">Graph Alg</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- ================= EDUCATION & TIMELINE SECTION ================= -->
+        <section id="education" class="py-20 px-4 lg:px-8 max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-xs font-mono uppercase tracking-widest text-brand-purple mb-2">04. Background</h2>
+                <h3 class="text-3xl lg:text-4xl font-bold text-white">Education & Academic Achievements</h3>
+                <div class="w-16 h-1 bg-gradient-to-r from-brand-pink to-brand-purple mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="max-w-4xl mx-auto">
+                <div class="relative border-l-2 border-brand-purple/30 pl-6 md:pl-10 space-y-12">
+                    
+                    <!-- Timeline Item 1 -->
+                    <div class="relative group">
+                        <!-- Dot Icon -->
+                        <div class="absolute -left-[31px] md:-left-[47px] top-0 w-8 h-8 rounded-full bg-slate-950 border-2 border-brand-purple flex items-center justify-center text-brand-cyan text-xs group-hover:scale-125 transition-transform">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                        </div>
+                        <div class="glass-panel p-6 rounded-2xl border border-white/10">
+                            <div class="flex flex-wrap justify-between items-start gap-2 mb-2">
+                                <div>
+                                    <h4 class="text-xl font-bold text-white">Bachelor of Science (B.Sc.) in Data Science & Mathematics</h4>
+                                    <span class="text-brand-purple font-mono text-xs">Major in Statistics & Applied Mathematics</span>
+                                </div>
+                                <span class="px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-mono">2023 - Present</span>
+                            </div>
+                            <p class="text-xs text-gray-300 leading-relaxed mb-4">
+                                Rigorous coursework bridging mathematical logic with computational statistics. Maintaining high distinction performance.
+                            </p>
+                            <div class="bg-slate-950/60 p-4 rounded-xl border border-white/5">
+                                <h5 class="text-xs font-bold text-gray-200 uppercase tracking-wider mb-2">Core Curriculum Highlights:</h5>
+                                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs font-mono text-gray-400">
+                                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-angle-right text-brand-cyan text-[10px]"></i> Multivariable Calculus</span>
+                                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-angle-right text-brand-cyan text-[10px]"></i> Linear Algebra</span>
+                                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-angle-right text-brand-cyan text-[10px]"></i> Machine Learning</span>
+                                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-angle-right text-brand-cyan text-[10px]"></i> Probability Theory</span>
+                                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-angle-right text-brand-cyan text-[10px]"></i> Data Structures</span>
+                                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-angle-right text-brand-cyan text-[10px]"></i> Real Analysis</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 2 -->
+                    <div class="relative group">
+                        <div class="absolute -left-[31px] md:-left-[47px] top-0 w-8 h-8 rounded-full bg-slate-950 border-2 border-brand-cyan flex items-center justify-center text-brand-pink text-xs group-hover:scale-125 transition-transform">
+                            <i class="fa-solid fa-award"></i>
+                        </div>
+                        <div class="glass-panel p-6 rounded-2xl border border-white/10">
+                            <div class="flex flex-wrap justify-between items-start gap-2 mb-2">
+                                <div>
+                                    <h4 class="text-xl font-bold text-white">Certifications & Competitions</h4>
+                                    <span class="text-brand-cyan font-mono text-xs">Self-Directed Excellence</span>
+                                </div>
+                                <span class="px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs font-mono">Ongoing</span>
+                            </div>
+                            <ul class="space-y-2 text-xs text-gray-300">
+                                <li class="flex items-center gap-2">
+                                    <i class="fa-solid fa-medal text-amber-400"></i>
+                                    <span><strong>Kaggle Competitions Participant:</strong> Active solver of tabular data & NLP predictive modeling tracks.</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i class="fa-solid fa-certificate text-brand-cyan"></i>
+                                    <span><strong>Deep Learning & Neural Networks:</strong> PyTorch specialization & mathematical backpropagation foundations.</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i class="fa-solid fa-square-root-variable text-brand-pink"></i>
+                                    <span><strong>Mathematics Olympiad Recognition:</strong> Advanced analytical problem-solving candidate.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= CONTACT FORM SECTION ================= -->
+        <section id="contact" class="py-20 px-4 lg:px-8 max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-xs font-mono uppercase tracking-widest text-brand-cyan mb-2">05. Communication</h2>
+                <h3 class="text-3xl lg:text-4xl font-bold text-white">Get In Touch</h3>
+                <p class="text-gray-400 text-sm max-w-md mx-auto mt-2">Have a research idea, data science project, or internship inquiry? Let's talk!</p>
+                <div class="w-16 h-1 bg-gradient-to-r from-brand-cyan via-brand-pink to-brand-emerald mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                
+                <!-- Contact Info Cards -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div class="glass-panel p-6 rounded-2xl border border-white/10 flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-xl shrink-0">
+                            <i class="fa-solid fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h5 class="text-xs font-mono text-gray-400 uppercase">Email Directly</h5>
+                            <a href="mailto:hruthick@example.com" class="text-base font-semibold text-white hover:text-brand-cyan transition-colors">hruthick.n.ds@gmail.com</a>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-2xl border border-white/10 flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-xl shrink-0">
+                            <i class="fa-brands fa-linkedin-in"></i>
+                        </div>
+                        <div>
+                            <h5 class="text-xs font-mono text-gray-400 uppercase">LinkedIn Profile</h5>
+                            <a href="https://linkedin.com" target="_blank" class="text-base font-semibold text-white hover:text-brand-cyan transition-colors">linkedin.com/in/hruthick-n</a>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-2xl border border-white/10 flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-pink-500/20 text-pink-400 flex items-center justify-center text-xl shrink-0">
+                            <i class="fa-brands fa-github"></i>
+                        </div>
+                        <div>
+                            <h5 class="text-xs font-mono text-gray-400 uppercase">GitHub Codebase</h5>
+                            <a href="https://github.com" target="_blank" class="text-base font-semibold text-white hover:text-brand-cyan transition-colors">github.com/hruthick-n</a>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-2xl border border-white/10 flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl shrink-0">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+                        <div>
+                            <h5 class="text-xs font-mono text-gray-400 uppercase">Location</h5>
+                            <p class="text-base font-semibold text-white">India</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <div class="lg:col-span-7">
+                    <form id="contact-form" class="glass-panel p-8 rounded-3xl border border-white/10 space-y-6">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-xs font-mono text-gray-300 uppercase mb-2" for="name">Your Name</label>
+                                <input type="text" id="name" required placeholder="e.g. Alan Turing" class="w-full px-4 py-3 rounded-xl bg-slate-950/80 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-brand-cyan transition-colors text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-mono text-gray-300 uppercase mb-2" for="email">Your Email</label>
+                                <input type="email" id="email" required placeholder="e.g. alan@math.org" class="w-full px-4 py-3 rounded-xl bg-slate-950/80 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-brand-cyan transition-colors text-sm">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-mono text-gray-300 uppercase mb-2" for="subject">Subject</label>
+                            <input type="text" id="subject" required placeholder="e.g. Data Science Collaboration" class="w-full px-4 py-3 rounded-xl bg-slate-950/80 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-brand-cyan transition-colors text-sm">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-mono text-gray-300 uppercase mb-2" for="message">Your Message</label>
+                            <textarea id="message" rows="5" required placeholder="Write your message here..." class="w-full px-4 py-3 rounded-xl bg-slate-950/80 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-brand-cyan transition-colors text-sm resize-none"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 text-white font-semibold text-sm hover:opacity-90 transition-all duration-300 shadow-lg shadow-purple-600/30 hover:scale-[1.01] flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-paper-plane"></i> Transmit Message
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="glass-panel border-t border-white/10 py-8 px-4 text-center relative z-10">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-mono text-gray-400">
+            <div>
+                © <span id="year"></span> <strong class="text-white">Hruthick N</strong>. All rights reserved.
+            </div>
+            <div class="flex gap-6">
+                <a href="#hero" class="hover:text-brand-cyan transition-colors">Back to Top <i class="fa-solid fa-arrow-up text-[10px] me-1"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Notification Toast Popup (Replaces alert) -->
+    <div id="toast-notification" class="fixed bottom-6 right-6 z-50 transform translate-y-32 opacity-0 transition-all duration-300 max-w-sm">
+        <div class="glass-panel p-4 rounded-xl border border-brand-cyan shadow-2xl flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <div>
+                <h6 class="text-sm font-bold text-white" id="toast-title">Message Sent!</h6>
+                <p class="text-xs text-gray-300" id="toast-body">Thank you for reaching out. Hruthick will get back to you shortly.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ================= EMBEDDED JAVASCRIPT ================= -->
+    <script>
+        // Set dynamic copyright year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Mobile Navbar Toggle Logic
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // 1. HERO CANVAS BACKGROUND ANIMATION
+        const canvas = document.getElementById('hero-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const particles = [];
+        const particleCount = 45;
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 2 + 1,
+                color: ['#8B5CF6', '#06B6D4', '#EC4899'][Math.floor(Math.random() * 3)],
+                vx: (Math.random() - 0.5) * 0.6,
+                vy: (Math.random() - 0.5) * 0.6
+            });
+        }
+
+        function drawParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Connect nearby nodes with lines (Mathematical graph representation)
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 120) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(139, 92, 246, ${1 - dist / 120})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            // Draw individual particle nodes
+            particles.forEach(p => {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = p.color;
+                ctx.fill();
+
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+            });
+
+            requestAnimationFrame(drawParticles);
+        }
+        drawParticles();
+
+
+        // 2. STATS COUNTER ANIMATION ON SCROLL
+        const counters = document.querySelectorAll('.counter');
+        let animated = false;
+
+        function animateCounters() {
+            const heroSection = document.getElementById('hero');
+            const rect = heroSection.getBoundingClientRect();
+
+            if (rect.top <= window.innerHeight && !animated) {
+                animated = true;
+                counters.forEach(counter => {
+                    const target = parseFloat(counter.getAttribute('data-target'));
+                    const isFloat = target % 1 !== 0;
+                    const duration = 2000;
+                    const stepTime = 20;
+                    const steps = duration / stepTime;
+                    const increment = target / steps;
+                    let current = 0;
+
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            counter.textContent = isFloat ? target.toFixed(1) : Math.round(target);
+                            clearInterval(timer);
+                        } else {
+                            counter.textContent = isFloat ? current.toFixed(1) : Math.round(current);
+                        }
+                    }, stepTime);
+                });
+            }
+        }
+        window.addEventListener('scroll', animateCounters);
+        animateCounters(); // Initial check
+
+
+        // 3. INTERACTIVE 2D MATRIX TRANSFORM VISUALIZER (Math Lab)
+        const mathCanvas = document.getElementById('matrix-canvas');
+        const mathCtx = mathCanvas.getContext('2d');
+        const angleSlider = document.getElementById('angle-slider');
+        const shearSlider = document.getElementById('shear-slider');
+        const angleVal = document.getElementById('angle-val');
+        const shearVal = document.getElementById('shear-val');
+        const matrixDisplay = document.getElementById('matrix-display');
+
+        function drawMatrixTransform() {
+            const w = mathCanvas.width;
+            const h = mathCanvas.height;
+            const cx = w / 2;
+            const cy = h / 2;
+
+            const deg = parseFloat(angleSlider.value);
+            const shear = parseFloat(shearSlider.value);
+            angleVal.textContent = `${deg}°`;
+            shearVal.textContent = shear;
+
+            const rad = (deg * Math.PI) / 180;
+            const cos = Math.cos(rad);
+            const sin = Math.sin(rad);
+
+            // Transformation Matrix entries:
+            // [ a  b ] = [ cos+shear*sin   -sin ]
+            // [ c  d ]   [ sin              cos ]
+            const a = cos + shear * sin;
+            const b = -sin;
+            const c = sin;
+            const d = cos;
+
+            matrixDisplay.innerHTML = `[ ${a.toFixed(2)}  ${b.toFixed(2)} ]<br>[ ${c.toFixed(2)}  ${d.toFixed(2)} ]`;
+
+            mathCtx.clearRect(0, 0, w, h);
+
+            // Draw original coordinate grid faint background
+            mathCtx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+            mathCtx.lineWidth = 1;
+            const gridSize = 25;
+            for (let x = -cx; x < cx; x += gridSize) {
+                mathCtx.beginPath();
+                mathCtx.moveTo(cx + x, 0);
+                mathCtx.lineTo(cx + x, h);
+                mathCtx.stroke();
+            }
+            for (let y = -cy; y < cy; y += gridSize) {
+                mathCtx.beginPath();
+                mathCtx.moveTo(0, cy + y);
+                mathCtx.lineTo(w, cy + y);
+                mathCtx.stroke();
+            }
+
+            // Draw Transformed Grid Lines
+            mathCtx.strokeStyle = 'rgba(6, 182, 212, 0.2)';
+            for (let gx = -10; gx <= 10; gx++) {
+                mathCtx.beginPath();
+                for (let gy = -10; gy <= 10; gy++) {
+                    const px = gx * gridSize;
+                    const py = gy * gridSize;
+                    const tx = a * px + b * py;
+                    const ty = c * px + d * py;
+
+                    if (gy === -10) mathCtx.moveTo(cx + tx, cy - ty);
+                    else mathCtx.lineTo(cx + tx, cy - ty);
+                }
+                mathCtx.stroke();
+            }
+
+            for (let gy = -10; gy <= 10; gy++) {
+                mathCtx.beginPath();
+                for (let gx = -10; gx <= 10; gx++) {
+                    const px = gx * gridSize;
+                    const py = gy * gridSize;
+                    const tx = a * px + b * py;
+                    const ty = c * px + d * py;
+
+                    if (gx === -10) mathCtx.moveTo(cx + tx, cy - ty);
+                    else mathCtx.lineTo(cx + tx, cy - ty);
+                }
+                mathCtx.stroke();
+            }
+
+            // Draw Transformed Basis Vectors (i-hat & j-hat)
+            // i-hat (1, 0)
+            const iX = a * gridSize * 2;
+            const iY = c * gridSize * 2;
+            drawVector(mathCtx, cx, cy, cx + iX, cy - iY, '#06B6D4', 'î');
+
+            // j-hat (0, 1)
+            const jX = b * gridSize * 2;
+            const jY = d * gridSize * 2;
+            drawVector(mathCtx, cx, cy, cx + jX, cy - jY, '#EC4899', 'ĵ');
+        }
+
+        function drawVector(ctx, fromX, fromY, toX, toY, color, label) {
+            ctx.beginPath();
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = color;
+            ctx.moveTo(fromX, fromY);
+            ctx.lineTo(toX, toY);
+            ctx.stroke();
+
+            // Arrow head
+            const headlen = 8;
+            const dx = toX - fromX;
+            const dy = toY - fromY;
+            const angle = Math.atan2(dy, dx);
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.moveTo(toX, toY);
+            ctx.lineTo(toX - headlen * Math.cos(angle - Math.PI / 6), toY - headlen * Math.sin(angle - Math.PI / 6));
+            ctx.lineTo(toX - headlen * Math.cos(angle + Math.PI / 6), toY - headlen * Math.sin(angle + Math.PI / 6));
+            ctx.fill();
+
+            // Label
+            ctx.font = 'bold 12px Fira Code';
+            ctx.fillText(label, toX + 6, toY - 6);
+        }
+
+        angleSlider.addEventListener('input', drawMatrixTransform);
+        shearSlider.addEventListener('input', drawMatrixTransform);
+        drawMatrixTransform();
+
+
+        // 4. PROJECT CARD TAG FILTERING LOGIC
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => {
+                    b.classList.remove('active', 'bg-brand-purple', 'text-white', 'shadow-lg');
+                    b.classList.add('glass-panel', 'text-gray-300');
+                });
+
+                btn.classList.add('active', 'bg-brand-purple', 'text-white', 'shadow-lg');
+                btn.classList.remove('glass-panel', 'text-gray-300');
+
+                const filter = btn.getAttribute('data-filter');
+
+                projectCards.forEach(card => {
+                    const categories = card.getAttribute('data-category');
+                    if (filter === 'all' || categories.includes(filter)) {
+                        card.style.display = 'flex';
+                        setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'scale(1)'; }, 50);
+                    } else {
+                        card.style.opacity = '0';
+                        card.style.transform = 'scale(0.95)';
+                        setTimeout(() => { card.style.display = 'none'; }, 300);
+                    }
+                });
+            });
+        });
+
+
+        // 5. CUSTOM CONTACT FORM HANDLING WITH TOAST NOTIFICATION
+        const contactForm = document.getElementById('contact-form');
+        const toast = document.getElementById('toast-notification');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Show toast notification
+            toast.classList.remove('translate-y-32', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            // Reset form fields
+            contactForm.reset();
+
+            // Hide toast after 4 seconds
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-32', 'opacity-0');
+            }, 4000);
+        });
+    </script>
+</body>
+</html>
